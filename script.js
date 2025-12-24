@@ -3,6 +3,39 @@ const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('nav-menu');
 const navLinks = document.querySelectorAll('.nav-link');
 const contactForm = document.getElementById('contactForm');
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
+
+// Theme handling
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'light') {
+    body.classList.add('light-theme');
+}
+
+function updateThemeToggleLabel() {
+    if (!themeToggle) return;
+    const icon = themeToggle.querySelector('.theme-icon');
+    const label = themeToggle.querySelector('.theme-label');
+    const isLight = body.classList.contains('light-theme');
+
+    if (isLight) {
+        if (icon) icon.className = 'fas fa-sun theme-icon';
+        if (label) label.textContent = 'Light';
+    } else {
+        if (icon) icon.className = 'fas fa-moon theme-icon';
+        if (label) label.textContent = 'Dark';
+    }
+}
+
+if (themeToggle) {
+    updateThemeToggleLabel();
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('light-theme');
+        const isLight = body.classList.contains('light-theme');
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        updateThemeToggleLabel();
+    });
+}
 
 // Mobile Navigation Toggle
 hamburger.addEventListener('click', () => {
