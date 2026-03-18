@@ -421,7 +421,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* =========================================================================
        9. CONTACT FORM (EMAILJS)
        ========================================================================= */
-    emailjs.init(cU4ImATK7r799K1cf);
+    emailjs.init('cU4ImATK7r799K1cf');
 
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
@@ -446,7 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 message: messageVal,
             };
 
-            emailjs.send(service_b2stsjq, template_ub2y1en, emailParams)
+            emailjs.send('service_b2stsjq', 'template_ub2y1en', emailParams)
                 .then(() => {
                     btnText.textContent = 'Message Sent!';
                     btn.style.background = '#00c853';
