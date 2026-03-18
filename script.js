@@ -416,4 +416,57 @@ document.addEventListener('DOMContentLoaded', () => {
         initParticles();
         animateParticles();
     }
+
+
+    /* =========================================================================
+       9. CONTACT FORM (EMAILJS)
+       ========================================================================= */
+    emailjs.init("YOUR_PUBLIC_KEY");
+
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const btn = contactForm.querySelector('.form-submit');
+            const btnText = btn.querySelector('span');
+            const originalText = btnText.textContent;
+
+            btn.disabled = true;
+            btnText.textContent = 'Sending...';
+
+            const nameVal = document.getElementById('name').value.trim();
+            const emailVal = document.getElementById('email').value.trim();
+            const messageVal = document.getElementById('message').value.trim();
+
+            const emailParams = {
+                from_name: nameVal,
+                from_email: emailVal,
+                subject: `Message from ${nameVal}`,
+                message: messageVal,
+            };
+
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', emailParams)
+                .then(() => {
+                    btnText.textContent = 'Message Sent!';
+                    btn.style.background = '#00c853';
+                    contactForm.reset();
+                    setTimeout(() => {
+                        btnText.textContent = originalText;
+                        btn.disabled = false;
+                        btn.style.background = '';
+                    }, 3000);
+                })
+                .catch((error) => {
+                    console.error('EmailJS error:', error);
+                    btnText.textContent = 'Failed. Try again.';
+                    btn.style.background = '#ff1744';
+                    setTimeout(() => {
+                        btnText.textContent = originalText;
+                        btn.disabled = false;
+                        btn.style.background = '';
+                    }, 3000);
+                });
+        });
+    }
 });
