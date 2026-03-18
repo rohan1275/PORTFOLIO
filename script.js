@@ -421,7 +421,11 @@ document.addEventListener('DOMContentLoaded', () => {
     /* =========================================================================
        9. CONTACT FORM (EMAILJS)
        ========================================================================= */
-    emailjs.init('cU4ImATK7r799K1cf');
+    try {
+        emailjs.init({ publicKey: 'cU4ImATK7r799K1cf' });
+    } catch (err) {
+        console.error('EmailJS init error:', err);
+    }
 
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
